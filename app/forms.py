@@ -1,9 +1,9 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
-from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
-from wtforms import StringField, TextAreaField, SubmitField
-from wtforms.validators import DataRequired, Length
+from wtforms import StringField, SubmitField
+from wtforms.validators import DataRequired
+from wtforms import StringField, SubmitField
+from wtforms.validators import DataRequired
 
-class LoginForm(FlaskForm):
-    username = StringField('Ticker', validators=[DataRequired()])
+class TickerForm(FlaskForm):
+    ticker = StringField('Ticker', validators=[DataRequired()])
     submit = SubmitField('Get Predictions')
