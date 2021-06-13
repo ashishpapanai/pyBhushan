@@ -1,27 +1,25 @@
 from flask import Flask, json, jsonify, request
 import stockDL as sdl
-import threading
+import concurrent.futures
 
 app = Flask(__name__)
 
-@app.route('/')
-def hello_world():
-    return "Hello, World!"
-
-@app.route('/predict/<string:ticker>', methods=['GET'])
-def predict_returns(ticker):
-    def predictions():
+def predictions(ticker):
         print("Making predictions")
         model = sdl.main.Main(ticker)
         return model.result
-    
-    thread = threading.Thread(target=predictions)
-    thread.setDaemon(True)
-    thread.start()
-    print(thread)
-    result = thread.join()
-    print(result)
-    return result
 
+@app.route('/')
+def hello_world():
+    return "Welcome to pyBhushan"
+
+@app.route('/predict/<string:ticker>', methods=['GET'])
+def predict_returns(ticker):
+
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        future = executor.submit(predictions, ticker)
+        return_value = future.result()
+        return (return_value.to_json())
+    
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, debug=True)
