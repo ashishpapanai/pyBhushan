@@ -1,13 +1,14 @@
 from flask import Flask, json, jsonify, request
-import stockDL as sdl
+# import stockDL as sdl
+from model import main
 import concurrent.futures
 
 app = Flask(__name__)
 
 def predictions(ticker):
         print("Making predictions")
-        model = sdl.main.Main(ticker)
-        return model.result
+        stockDL = main.Main(ticker)
+        return stockDL.result
 
 @app.route('/')
 def hello_world():
