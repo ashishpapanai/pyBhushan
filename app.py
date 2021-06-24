@@ -1,5 +1,4 @@
 from flask import Flask, json, jsonify, request
-# import stockDL as sdl
 from model import main
 import concurrent.futures
 
