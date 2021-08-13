@@ -4,20 +4,21 @@ import concurrent.futures
 
 app = Flask(__name__)
 
-def predictions(ticker):
+def predictions(ticker, saved):
+        print(saved)
         print("Making predictions")
-        stockDL = main.Main(ticker)
+        stockDL = main.Main(ticker, saved)
         return stockDL.result
 
 @app.route('/')
 def hello_world():
     return "Welcome to pyBhushan"
 
-@app.route('/predict/<string:ticker>', methods=['GET'])
-def predict_returns(ticker):
+@app.route('/predict/<string:ticker>/<string:saved>', methods=['GET'])
+def predict_returns(ticker, saved):
 
     with concurrent.futures.ThreadPoolExecutor() as executor:
-        future = executor.submit(predictions, ticker)
+        future = executor.submit(predictions, ticker, saved)
         return_value = future.result()
         return (return_value.to_json())
     

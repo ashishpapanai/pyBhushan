@@ -12,11 +12,11 @@ from . import train, preprocessing, market, calculations, models
 
 
 class Plots:
-    def __init__(self, ticker):
+    def __init__(self, ticker, saved):
         self.preprocessing = preprocessing.data_preprocessing(ticker)
-        self.train = train.Training(ticker)
+        self.train = train.Training(ticker, saved)
         self.model = models.Models(ticker)
-        self.market = market.Market(ticker)
+        self.market = market.Market(ticker, saved)
         self.calculations = calculations.Calculations()
         #self.training_plot_loss = self.plot_training_data()
         self.predictions_plot = self.plot_predictions()
